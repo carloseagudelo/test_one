@@ -1,6 +1,6 @@
 class Weather < ApplicationRecord
 
-  serialize :temperatures, Array
+  before_save :temperatures_change
 
   scope :by_date, lambda { |q|
     where(date: q) if q.present?
@@ -18,5 +18,9 @@ class Weather < ApplicationRecord
       order(:id)
     end
   }
+
+  def temperatures_change
+    self.temperatures = self.temperatures.map{ |x| x.to_f }
+  end
 
 end
