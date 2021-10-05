@@ -7,15 +7,13 @@ class Weather < ApplicationRecord
   }
 
   scope :by_city, lambda { |q|
-    return q.nil?
-    search = q.split(",").map{ |item| item.downcase }
-    where("lower(city) in (?)", search)
+    where("lower(city) in (?)", q.split(",").map(&:downcase) ) if q.present?
   }
   
   scope :by_order, lambda { |order|
     if order.present?
-      order(date: :asc ) if "date"
-      order(date: :desc ) if "-date"
+      order(date: :asc ) if order.eql? "date"
+      order(date: :desc ) if order.eql? "-date"
     else
       order(:id)
     end
