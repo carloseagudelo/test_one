@@ -12,8 +12,9 @@ class Weather < ApplicationRecord
   
   scope :by_order, lambda { |order|
     if order.present?
-      order(date: :asc ) if order.eql? "date"
-      order(date: :desc ) if order.eql? "-date"
+      order(date: :asc) if order.eql? "date"
+      order(date: :desc) if order.eql? "-date"
+
     else
       order(:id)
     end
